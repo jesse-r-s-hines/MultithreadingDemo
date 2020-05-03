@@ -1,5 +1,5 @@
-# Ignore SQLite databases.
-*.db
+# *.db
+# Ignore SQLite database temp files
 *.db-journal
 *.db-shm
 *.db-wal
