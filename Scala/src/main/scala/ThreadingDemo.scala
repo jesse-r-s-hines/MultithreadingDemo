@@ -146,18 +146,7 @@ object ThreadingDemo {
             target.asInstanceOf[js.Dynamic]._tippy.destroy()
         })
 
-        for (cm <- threadEditors.values.toSeq :+ globalsEditor) { // Playbacks are invalidated if any code changes.
-            cm.on("beforeChange", (cm: js.Dynamic, changeObj: js.Dynamic) => {
-                if (playbacks.nonEmpty) {
-                    if (dom.window.confirm("Changing the code will invalidate your playbacks! Are you sure?")) {
-                        playbacks.clear()
-                        updateControls()
-                    } else {
-                        changeObj.cancel()
-                    }
-                }
-            })
-        }
+        globalsEditor.on("beforeChange", confirmCodeChange(_, _))
     }
 
     /**
@@ -227,6 +216,8 @@ object ThreadingDemo {
       */
     @JSExportTopLevel("addThread")
     def addThread(content: String): Unit = {
+        if (!confirmCodeChange()) return;
+
         val id = if (threadEditors.size > 0) threadEditors.keys.max + 1 else 1 // the new start at 1. globals is 0.
 
         val threadColumn = jQ(s"""
@@ -262,6 +253,8 @@ object ThreadingDemo {
         assembly.setSize(null, "50vh")
         threadColumn.find(".assembly").hide()
         assemblyDisplays(id) = assembly
+
+        srcCode.on("beforeChange", confirmCodeChange(_, _))
     }
 
     // default arguments don't work with JSExportTopLevel, but overloading does.
@@ -273,6 +266,8 @@ object ThreadingDemo {
       */
     @JSExportTopLevel("removeThread")
     def removeThread(id: Int): Unit = {
+        if (!confirmCodeChange()) return;
+
         jQ(s"#thread-$id").remove()
         threadEditors.remove(id)
         assemblyDisplays.remove(id)
@@ -609,6 +604,26 @@ object ThreadingDemo {
                 <p id="collapseExample" class="collapse" style="white-space: pre-line">$message</p>
             </div>
         """))
+    }
+
+    /**
+     * Shows a confirm dialog if playbacks are non-empty, and clears the playbacks if confirmed.
+     * If given a codeMirror instance and a codemirror change object it will
+     * cancel the change in the CodeMirror instance.
+     */
+    def confirmCodeChange(cm: js.Dynamic = null, changeObj: js.Dynamic = null): Boolean = {
+        if (playbacks.nonEmpty) {
+            if (dom.window.confirm("Changing the code will invalidate your playbacks! Are you sure?")) {
+                playbacks.clear()
+                updateControls()
+                return true;
+            } else {
+                if (changeObj != null) changeObj.cancel()
+                return false;
+            }
+        } else {
+            return true;
+        }
     }
 
     /**

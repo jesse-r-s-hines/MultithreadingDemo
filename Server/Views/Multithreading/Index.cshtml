@@ -70,7 +70,7 @@
 <div class="row mb-3">
     <form class="form-inline float-left" asp-action="Index" method="get">
         <div class="form-actions no-color">
-            <input type="text" name="filter" value='@ViewData["Filter"]' class="form-control"/>
+            <input type="text" name="filter" value='@ViewData["Filter"]' class="form-control" placeholder="Search..."/>
             &nbsp;
             <input type="submit" value="Search" class="btn btn-primary" />
             <a asp-action="Index" class="btn btn-secondary">Clear</a>
