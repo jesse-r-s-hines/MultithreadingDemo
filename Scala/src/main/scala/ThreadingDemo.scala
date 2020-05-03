@@ -93,7 +93,7 @@ object ThreadingDemo {
         
         for ((pos, thread) <- threadsData.toList.sortBy(_._1) if pos != 0)
             addThread( thread("code").asInstanceOf[String] )
-        if (this.threadEditors.size == 0) addThread() // start with at least one thread.
+        if (this.threadEditors.size == 0) addThread("// Write a thread here.\n") // start with at least one thread.
 
         updateControls(); // initialize the control panel buttons and dropdowns.
 
@@ -216,8 +216,6 @@ object ThreadingDemo {
       */
     @JSExportTopLevel("addThread")
     def addThread(content: String): Unit = {
-        if (!confirmCodeChange()) return;
-
         val id = if (threadEditors.size > 0) threadEditors.keys.max + 1 else 1 // the new start at 1. globals is 0.
 
         val threadColumn = jQ(s"""
@@ -259,7 +257,10 @@ object ThreadingDemo {
 
     // default arguments don't work with JSExportTopLevel, but overloading does.
     @JSExportTopLevel("addThread")
-    def addThread(): Unit = addThread("// Write a thread here.\n") 
+    def addThread(): Unit = {
+        if (!confirmCodeChange()) return; // we only need to confirm when making a new thread.
+        addThread("// Write a thread here.\n") 
+    }
 
     /**
       * Removes a thread.
