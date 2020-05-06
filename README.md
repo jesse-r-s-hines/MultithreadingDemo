@@ -4,6 +4,7 @@ This project allows you to experiment with and demonstrate concurrency, the vari
 
 ## Tools
 
+In order to fullfil requirements for several school projects, the demo uses several different tools.
 The backend server is written using C# [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core) and [Entity Framework Core](https://docs.microsoft.com/en-us/ef/). The client side is written using [Scala.js](https://www.scala-js.org/) and uses the [Nearley](https://nearley.js.org/) library for parsing.
 
 ## Building
