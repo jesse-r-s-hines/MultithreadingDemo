@@ -1,0 +1,214 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Help - Multithreading</title>
+
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap-slate.min.css" />
+    <link rel="stylesheet", href="vendor/@fortawesome/fontawesome-free/css/all.min.css">
+
+    <link rel="stylesheet" href="css/site.css" />
+    
+    <link rel="stylesheet" href="vendor/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="vendor/codemirror/theme/darcula.css">
+    <style>
+        p {
+            text-indent: 2rem;
+        }
+        li p {
+            text-indent: 0.5rem;
+            padding-left: 2rem;
+        }
+        .CodeMirror {
+            height: auto;
+            padding-left: 2rem;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary mb-3 pr-0">
+            <ul class="navbar-nav flex-grow-1">
+                    <a class="navbar-brand" href="Demo.html">Threading Demo</a>
+            </ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="About.html">
+                            <i class="fas fa-info" style="font-size: 1.25em; padding: 0;"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Help.html">
+                            <i class="fas fa-question" style="font-size: 1.25em; padding: 0;"></i> Help
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        
+
+
+        <main role="main" class="pb-3 px-2">
+            
+<h1>Multithreading Demo</h1>
+
+<p>
+    This project allows you to experiment with and demonstrate concurrency, the various problems it can cause, and
+    solutions to those problems.  You can demonstrate race conditions, deadlock, and synchronization primitives such
+    as locks, condition variables and semaphores. Click "Open" in the top right to view an index of demo examples, or
+    to create your own.
+</p>
+
+<h3>Basic Usage</h3>
+<p>
+    A demo has two main sections, one globals section which is at the top, and one or more threads side by side
+    at the bottom of the screen. You can have as many threads as you want, and can make your own programs. All
+    of the threads can read and write to variables defined in the globals section, but threads can't access
+    each other's data.
+</p>
+<p>    
+    Once you have some code in the globals and threads sections, you can run the demo. You will see a compiled
+    version of the code next to each thread, in MIPS-like assembly.  You then act as the scheduler yourself,
+    allowing you to control the exact order each thread gets executed in. You use the "step" button above each
+    thread to move one instruction forward in its execution. 
+</p>
+<p>
+    To be able to save a demo permanently you'll need to log in and make an account. Then, make sure to hit "Save"
+    before you leave, so you don't have to remake the demo! 
+</p>
+
+<h3>The Language</h3>
+<p>
+    The language you can use is mostly a sub-set of C. You can set and modify variables, do arithmetic, and preform
+    loops and conditionals.  It can recognize 5 variable types: int, bool, mutex, cond_var, and sem.
+</p>
+<p>
+    You can use any of the 3 synchronization primitives, mutexes, condition variables, and semaphores. The following
+    procedures and functions are available to work with them:
+</p>
+<ul>
+    <li>
+        lock(mutex m)
+        <p>
+            Tries to aquire the given mutex. If the mutex is free, it will be marked as held and the calling thread
+            will continue into the critical section. If the mutex is already held, the thread will block until it
+            becomes available.
+        </p>
+    </li>
+    <li>
+        unlock(mutex m)
+        <p>
+            Releases the given mutex so that another thread can enter the critcal section.
+        </p>
+    </li>
+    <li>
+        cond_wait(cond_var c)
+        <p>
+            Blocks the calling thread until another thread calls cond_signal on the same cond_var. Unlike C's 
+            pthread_cond_wait you don't need to surround the call to cond_wait with a mutex.
+        </p>
+    </li>
+    <li>
+        cond_signal(cond_var c)
+        <p>
+            Wakes all threads that were waiting on the given condition variable. Unlike C's pthread_cond_signal
+            you don't need to surround the call to cond_wait with a mutex.
+        </p>
+    </li>
+    <li>
+        sem_create(int value)
+        <p>
+            Creates and returns a semaphore with the given initial value.
+        </p>
+    </li>
+    <li>
+        sem_wait(sem s)
+        <p>
+            If the value of s is 1 or greater, it will decrement the value of s and the calling thread will continue
+            forward right away. If s's value is 0 or less it will decrement the value of s and block until it is
+            released by a call to sem_post on the same semaphore by another thread.
+        </p>
+    </li>
+    <li>
+        sem_post(sem s)
+        <p>
+            Increments the value of s, and if there are any threads waiting on the given semaphore, it will wake one.
+            If there is more one thread waiting on the semaphore, it will give the user the option to choose one
+            to wake.    
+        </p>
+    </li>
+</ul>
+    
+<h3>Examples</h3>
+<div class="border border-primary mb-2">
+<textarea id="examples" readonly>
+int counter = 1 + 6 / 2;
+bool b = true;
+mutex m;
+cond_var c;
+sem s = sem_create(1);
+
+for (int i = 0; i < 10; i++) {
+    lock(m);
+        counter++;
+    unlock(m);
+}
+
+int j = 0;
+while (j < 10) {
+    sem_wait(s);
+        counter++;
+    sem_post(s);
+}
+
+cond_signal(c);
+cond_wait(c);
+</textarea>
+</div>
+
+
+<h3>Playbacks</h3>
+<p>
+    Once your have a demo set up, you may have specific paths of execution through the threads that cause whatever 
+    problem or situation you are trying to demonstrate.   You can record those specific play throughs, and then play
+    them back later.  Use the record button, and then step through the threads as you would normally. When you are
+    finished press the stop recording button and it will let you name and save the recorded playback. You can have
+    multiple playbacks if you want.  To replay the playback, select it from the playback dropdown and hit the play
+    playback button (below the dropdown).
+</p>
+
+
+        </main>
+    </div>
+
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+    <script src="js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0"></script>
+
+    
+    <script src="vendor/codemirror/lib/codemirror.js"></script>
+    <script src="js/customCodemirrorModes/mips/mips.js"></script>
+    <script src="js/customCodemirrorModes/ravel/ravel.js"></script>
+    <script>
+        CodeMirror.fromTextArea($("#examples").get(0), {
+            mode: "ravel",
+            theme: "darcula",
+            readOnly: true,
+            viewportMargin: Infinity,
+        })
+    </script>
+
+</body>
+</html>
