@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://localhost:5001/Multithreading/Demo -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Multithreading</title>
+
+    <link rel="stylesheet" href="./ThreadingDemo_files/bootstrap-slate.min.css">
+    <link rel="stylesheet" ,="" href="./ThreadingDemo_files/all.min.css">
+
+    <link rel="stylesheet" href="./ThreadingDemo_files/site.css">
+    
+    <link rel="stylesheet" href="./ThreadingDemo_files/codemirror.css">
+    <link rel="stylesheet" href="./ThreadingDemo_files/darcula.css">
+    <link rel="stylesheet" ,="" href="./ThreadingDemo_files/tippy.css">
+    <link rel="stylesheet" ,="" href="./ThreadingDemo_files/select2.min.css">
+    <link rel="stylesheet" ,="" href="./ThreadingDemo_files/threadingDemo.css">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary mb-3 pr-0">
+            <ul class="navbar-nav flex-grow-1">
+
+    <form class="form-inline" action="https://localhost:5001/Multithreading/Demo">
+        <input type="text" class="form-control" id="demo-title" value="Untitled" maxlength="255">
+        <li class="nav-item">
+            <a class="nav-link" onclick="save(); return false;" href="https://localhost:5001/Multithreading/Demo#">
+                <i class="far fa-save" style="font-size: 1.25em; padding: 0;"></i> Save
+            </a>
+        </li>
+        <label for="demo-visibility" class="ml-4">Private</label>
+        <label class="switch mx-2">
+            <input type="checkbox" id="demo-visibility" value="public">
+            <span class="slider round"></span>
+        </label>
+        <label for="demo-visibility">Public</label>
+    </form>
+            </ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://localhost:5001/Multithreading">
+                            <i class="far fa-folder-open" style="font-size: 1.25em; padding: 0;"></i> Open
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://localhost:5001/Home/About">
+                            <i class="fas fa-info" style="font-size: 1.25em; padding: 0;"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://localhost:5001/Multithreading/Help">
+                            <i class="fas fa-question" style="font-size: 1.25em; padding: 0;"></i> Help
+                        </a>
+                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="login" href="https://localhost:5001/Identity/Account/Login">
+                                <i class="fas fa-sign-in-alt" style="font-size: 1.25em; padding: 0;"></i> Login
+                            </a>
+                        </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        
+
+
+        <main role="main" class="pb-3 px-2">
+            
+
+
+<script>
+    originalData = {"id":0,"title":null,"authorId":null,"visibility":0,"description":null,"createdAt":"0001-01-01T00:00:00","updatedAt":"0001-01-01T00:00:00","author":null,"demoTag":[],"playback":[],"thread":[]}
+</script>
+
+<div id="threading-demo" class="d-flex flex-column" style="height: 80vh">
+
+    <div class="card mb-3">
+        <div class="card-header collapsed" data-toggle="collapse" data-target="#description-collapse">
+            <h6 class="mb-0">
+                <button class="btn btn-link collapsed p-0" type="button">
+                    Description
+                </button>
+                    <i class="fas fa-angle-up collapsed-rotate-icon"></i>
+            </h6>
+        </div>
+        <div id="description-collapse" class="collapse"><div class="card-body">
+            <select id="demo-tags" class="form-control select2-hidden-accessible" style="width:100%" multiple="" data-select2-id="demo-tags" tabindex="-1" aria-hidden="true"><option value="Mutexes">Mutexes</option>
+<option value="Condition Variables">Condition Variables</option>
+<option value="Semaphores">Semaphores</option>
+<option value="Race Conditions">Race Conditions</option>
+<option value="Deadlock">Deadlock</option>
+</select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="1" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false"><ul class="select2-selection__rendered"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="Tags..." style="width: 0px;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+            <div class="my-3"></div>
+            <textarea id="demo-description" class="form-control" placeholder="Describe your demo."></textarea>
+        </div></div>
+    </div>
+
+    <div class="d-flex flex-row">
+        <div id="globals" class="flex-grow-1 mr-3">
+            <div class="source-code"><div class="border border-primary"><div class="CodeMirror cm-s-darcula" style="height: 30vh;"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 34px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -15px; border-right-width: 15px; min-height: 52px; min-width: 295.047px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre class="CodeMirror-line-like"><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 22px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Define global variables here.</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 15px; width: 1px; border-bottom: 0px solid transparent; top: 52px;"></div><div class="CodeMirror-gutters" style="height: 67px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></div></div>
+            <div class="runtime-variables d-flex justify-content-start" style="display: none;"></div>
+        </div>
+        <div id="controls">
+            <div class="card" style="height: 100%; width: 100%;"><div class="card-body">
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-row mb-2">
+                        <button id="add-thread" class="btn mx-1" onclick="addThread()" title="Add Thread">
+                            <i class="fas fa-plus text-success"></i>
+                        </button>
+                        <button id="toggle-demo" class="btn mx-1" onclick="toggleDemo()" title="Run Demo"><i class="fas fa-play text-success"></i></button>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <span style="padding-top:4px">Playbacks:&nbsp;</span>
+                        <hr width="100%" class="border-secondary">
+                    </div>
+                    <form class="form-inline mb-3" action="https://localhost:5001/Multithreading/Demo">
+                        <select id="playback-select" class="form-control mx-2 select2-hidden-accessible" style="width: 100%" data-select2-id="playback-select" tabindex="-1" aria-hidden="true"></select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-playback-select-container"><span class="select2-selection__rendered" id="select2-playback-select-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Add a playback...</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                    </form>
+                    <div class="d-flex flex-row flex-wrap mb-3">
+                        <button id="play-playback" class="btn btn-sm mx-1" onclick="playPlayback()" title="Play Playback" disabled="">
+                            <i class="fas fa-play text-success"></i>
+                        </button>
+                        <button id="remove-playback" class="btn btn-sm mx-1" onclick="removePlayback()" title="Remove Playback" disabled="">
+                            <i class="far fa-trash-alt text-danger"></i>
+                        </button>
+                        <button id="record-playback" class="btn btn-sm mx-1" onclick="record()" title="Record Playback">
+                            <i class="fas fa-record-vinyl text-danger"></i>
+                        </button>
+                    </div>
+
+                    <div id="playback-controls" style="display: none;">
+                        <div class="d-flex flex-column">
+                            <div class="d-flex flex-row">
+                                <span style="padding-top:4px">Playing:&nbsp;</span>
+                                <hr width="100%" class="border-secondary">
+                            </div>
+                            <div class="d-flex flex-row flex-wrap">
+                                <button id="toggle-playback" class="btn btn-sm mx-1" onclick="togglePlayback()" title="Continue Playback"><i class="fas fa-play text-success"></i></button>
+                                <button id="cancel-playback" class="btn btn-sm mx-1" onclick="cancelPlayback()" title="Cancel Playback">
+                                    <i class="far fa-times-circle text-danger"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="record-controls" style="display: none;">
+                        <div class="d-flex flex-column">
+                            <div class="d-flex flex-row">
+                                <span style="padding-top:4px">Recording:&nbsp;</span>
+                                <hr width="100%" class="border-secondary">
+                            </div>
+                            <div class="d-flex flex-row flex-wrap">
+                                <button id="stop-recording" class="btn btn-sm mx-1" onclick="stopRecord()" title="Stop Recording">
+                                    <i class="far fa-stop-circle text-danger"></i>
+                                </button>
+                                <button id="cancel-record" class="btn btn-sm mx-1" onclick="cancelRecord()" title="Cancel Recording">
+                                    <i class="far fa-times-circle text-danger"></i>
+                                </button>
+                                <button id="add-breakpoint" class="btn btn-sm mx-1" onclick="addBreakpoint()" title="Add Breakpoint">
+                                    <i class="fas fa-circle text-warning"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+        </div>
+    </div>
+
+    <div id="threads" class="row no-gutters" style="padding-top: 10px;">
+    <div id="thread-1" class="thread col-md pr-2 pb-1">
+                <div class="row no-gutters flex-nowrap">
+                    <div class="col-md">
+                        <div class="row"><div class="col">
+                            <button class="btn btn-sm float-right remove-thread" onclick="removeThread(1)" title="Remove Thread">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div></div>
+                        <div class="row"><div class="col source-code"><div class="border border-primary"><div class="CodeMirror cm-s-darcula" style="height: 50vh;"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 34px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -15px; border-right-width: 15px; min-height: 52px; min-width: 214.047px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre class="CodeMirror-line-like"><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 22px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Write a thread here.</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 15px; width: 1px; border-bottom: 0px solid transparent; top: 52px;"></div><div class="CodeMirror-gutters" style="height: 67px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></div></div></div>
+                    </div>
+                    <div class="col-md assembly" style="display: none;">
+                        <div class="d-flex flex-row-reverse">
+                            <button class="btn btn-sm step-button" onclick="stepThread(1)"></button>
+                            <div "flex-grow-1"="">
+                                <span class="badge text-right mr-2 thread-state"></span>
+                            </div>
+                        </div>
+                        <div class="row"><div class="col assembly-disp"><div class="border border-primary"><div class="CodeMirror cm-s-darcula" style="height: 50vh;"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: -15px; border-right-width: 15px; min-height: 30px; min-width: 7px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre class="CodeMirror-line-like"><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 22px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 15px; width: 1px; border-bottom: 0px solid transparent; top: 30px;"></div><div class="CodeMirror-gutters" style="display: none; height: 45px;"></div></div></div></div></div></div>
+                    </div>
+                </div>
+            </div></div>
+</div>
+
+
+<div class="modal fade" id="playback-name-modal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <label for="playback-name">What do you want to name the playback?</label>
+                <input id="playback-name" type="text" class="form-control" maxlength="255">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Not Logged In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="overflow:hidden">
+                You need to be logged in to be able to save demos.
+                <a href="https://localhost:5001/Identity/Account/Login" target="_blank">Login</a>
+                then save your demo.
+            </div>
+        </div>
+    </div>
+</div>
+        </main>
+    </div>
+
+    <script src="./ThreadingDemo_files/jquery.js"></script>
+    <script src="./ThreadingDemo_files/bootstrap.bundle.js"></script>
+
+    <script src="./ThreadingDemo_files/site.js"></script>
+
+    
+    <script src="./ThreadingDemo_files/nearley.js"></script>
+    <script src="./ThreadingDemo_files/moo.js"></script>
+
+    <script src="./ThreadingDemo_files/codemirror.js"></script>
+    <script src="./ThreadingDemo_files/matchbrackets.js"></script>
+    <script src="./ThreadingDemo_files/closebrackets.js"></script>
+    <script src="./ThreadingDemo_files/comment.js"></script>
+
+    <script src="./ThreadingDemo_files/popper.js"></script>
+    <script src="./ThreadingDemo_files/tippy.umd.js"></script>
+    <script src="./ThreadingDemo_files/select2.min.js"></script>
+
+    <script src="./ThreadingDemo_files/mips.js"></script>
+    <script src="./ThreadingDemo_files/ravel.js"></script>
+
+    <script src="./ThreadingDemo_files/grammar.js"></script>
+    <script src="./ThreadingDemo_files/testParser.js"></script>
+    <script src="./ThreadingDemo_files/threadingDemo.js"></script>
+
+
+
+</body></html>
