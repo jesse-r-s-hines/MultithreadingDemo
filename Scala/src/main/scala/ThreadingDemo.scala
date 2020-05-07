@@ -406,7 +406,7 @@ object ThreadingDemo {
     @JSExportTopLevel("stopDemo")
     def stopDemo(): Unit = {
         demoRunning = false
-        if (playbackState == Playback.Playing) {
+        if (playbackState == Playback.Playing || playbackState == Playback.Paused) {
             cancelPlayback()
         } else if (playbackState == Playback.Recording) {
             cancelRecord()
@@ -725,9 +725,9 @@ object ThreadingDemo {
      */
     @JSExportTopLevel("record")
     def record(): Unit = {
-        runDemo()
         playbackState = Playback.Recording;
         recordingPlayback = new Playback()
+        runDemo()
         updateControls()
     }
 
@@ -769,6 +769,7 @@ object ThreadingDemo {
         playbackState = Playback.NotPlaying;
         recordingPlayback = null;
         updateControls()
+        updateDemo()
     }
 
     /**
@@ -853,6 +854,7 @@ object ThreadingDemo {
         playbackState = Playback.NotPlaying
         playingPlayback = null;
         updateControls()
+        updateDemo()
     }
 }
 
