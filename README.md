@@ -32,6 +32,9 @@ cd Server
 dotnet run
 ```
 
+## Online Demo
+An online demo, minus the database portion, is available at https://jessehines0.github.io/MultithreadingDemoPages/Demo.html
+
 ## Usage
 
 ### Basic Usage
