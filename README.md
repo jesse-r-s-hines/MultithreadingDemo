@@ -11,7 +11,7 @@ The backend server is written using C# [ASP.NET Core](https://docs.microsoft.com
 
 To build the project you'll need [sbt](https://www.scala-sbt.org/), [node](https://nodejs.org/en/), [npm](https://www.npmjs.com/get-npm), and [.NET Core](https://dotnet.microsoft.com/download).
 
-You can run the mMakefile in a bash shell launch the server locally. 
+You can run the Makefile in a bash shell launch the server locally. 
 ```
 make run
 ```
