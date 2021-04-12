@@ -6741,11 +6741,21 @@ class $c_Lthreadingdemo_Tests$ extends $c_O {
     const $$x8 = $as_Lthreadingdemo_Thread(elem$1);
     const array$7 = [$ct_T2__O__O__(new $c_T2(), "b", 1), $ct_T2__O__O__(new $c_T2(), "result", 3)];
     this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V($$x8, new $c_sjsr_WrappedVarArgs(array$7));
-    elem$1 = $m_Lthreadingdemo_Thread$().compileFrom__T__Lthreadingdemo_Memory__Lthreadingdemo_MutableMap__I__Lthreadingdemo_Thread("\n            for (int i = 0; i < 10; i++) {\n                int x = 3; // redefining in a loop should still work.\n            }\n        ", new $c_Lthreadingdemo_Memory(2147483647, new $c_Lthreadingdemo_MutableMap()), new $c_Lthreadingdemo_MutableMap(), (-1));
+    elem$1 = $m_Lthreadingdemo_Thread$().compileFrom__T__Lthreadingdemo_Memory__Lthreadingdemo_MutableMap__I__Lthreadingdemo_Thread("\n            int a = 0;\n            int b = 0;\n            if (1 == 1) {\n                a = 1;\n                b = 1;\n            }\n            a = 2;\n        ", new $c_Lthreadingdemo_Memory(2147483647, new $c_Lthreadingdemo_MutableMap()), new $c_Lthreadingdemo_MutableMap(), (-1));
     $as_Lthreadingdemo_Thread(elem$1).execute__V();
     const $$x9 = $as_Lthreadingdemo_Thread(elem$1);
-    const array$8 = [$ct_T2__O__O__(new $c_T2(), "i", 10), $ct_T2__O__O__(new $c_T2(), "x", 3)];
+    const array$8 = [$ct_T2__O__O__(new $c_T2(), "a", 2), $ct_T2__O__O__(new $c_T2(), "b", 1)];
     this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V($$x9, new $c_sjsr_WrappedVarArgs(array$8));
+    elem$1 = $m_Lthreadingdemo_Thread$().compileFrom__T__Lthreadingdemo_Memory__Lthreadingdemo_MutableMap__I__Lthreadingdemo_Thread("\n            int a = 0;\n            int b = 0;\n            if (1 == 2) {\n                a = 1;\n                b = 1;\n            }\n            a = 2;\n        ", new $c_Lthreadingdemo_Memory(2147483647, new $c_Lthreadingdemo_MutableMap()), new $c_Lthreadingdemo_MutableMap(), (-1));
+    $as_Lthreadingdemo_Thread(elem$1).execute__V();
+    const $$x10 = $as_Lthreadingdemo_Thread(elem$1);
+    const array$9 = [$ct_T2__O__O__(new $c_T2(), "a", 2), $ct_T2__O__O__(new $c_T2(), "b", 0)];
+    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V($$x10, new $c_sjsr_WrappedVarArgs(array$9));
+    elem$1 = $m_Lthreadingdemo_Thread$().compileFrom__T__Lthreadingdemo_Memory__Lthreadingdemo_MutableMap__I__Lthreadingdemo_Thread("\n            for (int i = 0; i < 10; i++) {\n                int x = 3; // redefining in a loop should still work.\n            }\n        ", new $c_Lthreadingdemo_Memory(2147483647, new $c_Lthreadingdemo_MutableMap()), new $c_Lthreadingdemo_MutableMap(), (-1));
+    $as_Lthreadingdemo_Thread(elem$1).execute__V();
+    const $$x11 = $as_Lthreadingdemo_Thread(elem$1);
+    const array$10 = [$ct_T2__O__O__(new $c_T2(), "i", 10), $ct_T2__O__O__(new $c_T2(), "x", 3)];
+    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V($$x11, new $c_sjsr_WrappedVarArgs(array$10));
     const memory = new $c_Lthreadingdemo_Memory(2147483647, new $c_Lthreadingdemo_MutableMap());
     const globalThread = $m_Lthreadingdemo_Thread$().compileGlobalFrom__T__Lthreadingdemo_Memory__I__Lthreadingdemo_Thread("int global = 3;", memory, (-1));
     globalThread.execute__V();
@@ -6753,20 +6763,20 @@ class $c_Lthreadingdemo_Tests$ extends $c_O {
     const thread1 = $m_Lthreadingdemo_Thread$().compileFrom__T__Lthreadingdemo_Memory__Lthreadingdemo_MutableMap__I__Lthreadingdemo_Thread("int local = global + 1;", memory, globalThread.Lthreadingdemo_Thread__f_bindings.Lthreadingdemo_Bindings__f_globals, 2146435071);
     thread0.execute__V();
     thread1.execute__V();
-    const array$9 = [$ct_T2__O__O__(new $c_T2(), "local", 3)];
-    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V(thread0, new $c_sjsr_WrappedVarArgs(array$9));
-    const array$10 = [$ct_T2__O__O__(new $c_T2(), "local", 4)];
-    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V(thread1, new $c_sjsr_WrappedVarArgs(array$10));
+    const array$11 = [$ct_T2__O__O__(new $c_T2(), "local", 3)];
+    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V(thread0, new $c_sjsr_WrappedVarArgs(array$11));
+    const array$12 = [$ct_T2__O__O__(new $c_T2(), "local", 4)];
+    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V(thread1, new $c_sjsr_WrappedVarArgs(array$12));
     elem$1 = $m_Lthreadingdemo_Thread$().compileFrom__T__Lthreadingdemo_Memory__Lthreadingdemo_MutableMap__I__Lthreadingdemo_Thread("\n            int a; int b;\n            if (true) a = 3;\n\n            int cond = false;\n            if (cond) b = 1; else b = 2;\n        ", new $c_Lthreadingdemo_Memory(2147483647, new $c_Lthreadingdemo_MutableMap()), new $c_Lthreadingdemo_MutableMap(), (-1));
     $as_Lthreadingdemo_Thread(elem$1).execute__V();
-    const $$x10 = $as_Lthreadingdemo_Thread(elem$1);
-    const array$11 = [$ct_T2__O__O__(new $c_T2(), "a", 3), $ct_T2__O__O__(new $c_T2(), "b", 2)];
-    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V($$x10, new $c_sjsr_WrappedVarArgs(array$11));
+    const $$x12 = $as_Lthreadingdemo_Thread(elem$1);
+    const array$13 = [$ct_T2__O__O__(new $c_T2(), "a", 3), $ct_T2__O__O__(new $c_T2(), "b", 2)];
+    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V($$x12, new $c_sjsr_WrappedVarArgs(array$13));
     elem$1 = $m_Lthreadingdemo_Thread$().compileFrom__T__Lthreadingdemo_Memory__Lthreadingdemo_MutableMap__I__Lthreadingdemo_Thread("\n            int x; int y;\n            int result = 9 - (x=3)*(7 + 4%47) + (9 + 8/(2))*(3*(y=5*100)) - (7<(10000/3)) * -78 +\n                         (2*3 == 3*2 && 5*5 == 25) + (-134 || 2 - 2);\n        ", new $c_Lthreadingdemo_Memory(2147483647, new $c_Lthreadingdemo_MutableMap()), new $c_Lthreadingdemo_MutableMap(), (-1));
     $as_Lthreadingdemo_Thread(elem$1).execute__V();
-    const $$x11 = $as_Lthreadingdemo_Thread(elem$1);
-    const array$12 = [$ct_T2__O__O__(new $c_T2(), "x", 3), $ct_T2__O__O__(new $c_T2(), "y", 500), $ct_T2__O__O__(new $c_T2(), "result", 19556)];
-    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V($$x11, new $c_sjsr_WrappedVarArgs(array$12))
+    const $$x13 = $as_Lthreadingdemo_Thread(elem$1);
+    const array$14 = [$ct_T2__O__O__(new $c_T2(), "x", 3), $ct_T2__O__O__(new $c_T2(), "y", 500), $ct_T2__O__O__(new $c_T2(), "result", 19556)];
+    this.assertVarsEqual__Lthreadingdemo_Thread__sci_Seq__V($$x13, new $c_sjsr_WrappedVarArgs(array$14))
   };
   testSynchronizationPrimitives__V() {
     let memory = new $c_Lthreadingdemo_Memory(2147483647, new $c_Lthreadingdemo_MutableMap());
@@ -8273,12 +8283,20 @@ class $c_Lthreadingdemo_ThreadingDemo$ extends $c_O {
     this.Lthreadingdemo_ThreadingDemo$__f_demoRunning = false;
     const x = this.Lthreadingdemo_ThreadingDemo$__f_playbackState;
     const x$2 = $m_Lthreadingdemo_Playback$().Lthreadingdemo_Playback$__f_Playing;
+    let $$x1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      this.cancelPlayback__V()
+      $$x1 = true
     } else {
       const x$3 = this.Lthreadingdemo_ThreadingDemo$__f_playbackState;
-      const x$4 = $m_Lthreadingdemo_Playback$().Lthreadingdemo_Playback$__f_Recording;
-      if (((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))) {
+      const x$4 = $m_Lthreadingdemo_Playback$().Lthreadingdemo_Playback$__f_Paused;
+      $$x1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    };
+    if ($$x1) {
+      this.cancelPlayback__V()
+    } else {
+      const x$5 = this.Lthreadingdemo_ThreadingDemo$__f_playbackState;
+      const x$6 = $m_Lthreadingdemo_Playback$().Lthreadingdemo_Playback$__f_Recording;
+      if (((x$5 === null) ? (x$6 === null) : x$5.equals__O__Z(x$6))) {
         this.cancelRecord__V()
       }
     };
@@ -8921,9 +8939,9 @@ class $c_Lthreadingdemo_ThreadingDemo$ extends $c_O {
     $$x5.ajax($m_Lio_udash_wrappers_jquery_JQueryAjaxSettings$().apply__sjs_js_Any__s_Option__F2__s_Option__F2__sjs_js_Any__sjs_js_Any__sjs_js_Any__sjs_js_Any__s_Option__sjs_js_Any__F2__T__F2__s_Option__sjs_js_Any__s_Option__s_Option__T__sjs_js_Any__T__T__T__s_Option__T__sjs_js_Any__F3__s_Option__s_Option__T__T__T__sjs_js_Any__sjs_js_Object__Lio_udash_wrappers_jquery_JQueryAjaxSettings(null, x$8, null, x$10, null, null, null, null, null, x$16, x$3, null, "json", x$6, x$18, null, x$20, x$21, null, null, "POST", null, null, x$26, null, null, x$5, x$29$3, x$30$1, null, "/Multithreading/Save", null, null, null))
   };
   record__V() {
-    this.runDemo__V();
     this.Lthreadingdemo_ThreadingDemo$__f_playbackState = $m_Lthreadingdemo_Playback$().Lthreadingdemo_Playback$__f_Recording;
     this.Lthreadingdemo_ThreadingDemo$__f_recordingPlayback = new $c_Lthreadingdemo_Playback(($m_Lthreadingdemo_Playback$(), ""));
+    this.runDemo__V();
     this.updateControls__V()
   };
   stopRecord__V() {
@@ -8951,7 +8969,8 @@ class $c_Lthreadingdemo_ThreadingDemo$ extends $c_O {
   cancelRecord__V() {
     this.Lthreadingdemo_ThreadingDemo$__f_playbackState = $m_Lthreadingdemo_Playback$().Lthreadingdemo_Playback$__f_NotPlaying;
     this.Lthreadingdemo_ThreadingDemo$__f_recordingPlayback = null;
-    this.updateControls__V()
+    this.updateControls__V();
+    this.updateDemo__V()
   };
   addBreakpoint__V() {
     this.Lthreadingdemo_ThreadingDemo$__f_recordingPlayback.addBreakpoint__V()
@@ -8996,7 +9015,8 @@ class $c_Lthreadingdemo_ThreadingDemo$ extends $c_O {
     this.pausePlayback__V();
     this.Lthreadingdemo_ThreadingDemo$__f_playbackState = $m_Lthreadingdemo_Playback$().Lthreadingdemo_Playback$__f_NotPlaying;
     this.Lthreadingdemo_ThreadingDemo$__f_playingPlayback = null;
-    this.updateControls__V()
+    this.updateControls__V();
+    this.updateDemo__V()
   };
   threadingdemo$ThreadingDemo$$$anonfun$resumePlayback$1__O() {
     if ($m_Lthreadingdemo_ThreadingDemo$().Lthreadingdemo_ThreadingDemo$__f_playingPlayback.hasNext__Z()) {
@@ -23286,8 +23306,9 @@ class $c_Lthreadingdemo_RavelIf extends $c_Lthreadingdemo_RavelStatement {
     const condRes = $as_T(x1._2__O());
     const ifCaseComp = $m_Lthreadingdemo_Parser$().compile__sci_Seq__Lthreadingdemo_Bindings__Z__sci_Seq(this.Lthreadingdemo_RavelIf__f_ifCase, bindings, global);
     const elseCaseComp = $m_Lthreadingdemo_Parser$().compile__sci_Seq__Lthreadingdemo_Bindings__Z__sci_Seq(this.Lthreadingdemo_RavelIf__f_elseCase, bindings, global);
+    const branchDistance = ((ifCaseComp.length__I() + ((elseCaseComp.length__I() > 0) ? 1 : 0)) | 0);
     const this$4 = $m_s_package$().s_package$__f_Vector;
-    const array = [new $c_Lthreadingdemo_Instruction("beq", condRes, "$zero", ("" + ((1 + ifCaseComp.length__I()) | 0)), this.Lthreadingdemo_RavelIf__f_src, "")];
+    const array = [new $c_Lthreadingdemo_Instruction("beq", condRes, "$zero", ("" + branchDistance), this.Lthreadingdemo_RavelIf__f_src, "")];
     const elems = new $c_sjsr_WrappedVarArgs(array);
     const suffix = this$4.from__sc_IterableOnce__sci_Vector(elems);
     const this$5 = $as_sc_IterableOps(condComp.appendedAll__sc_IterableOnce__O(suffix));
@@ -33833,14 +33854,14 @@ resumePlayback = (function() {
 });
 addThread = (function(...rest) {
   switch ($uI(rest.length)) {
-    case 1: {
-      const prep0 = $as_T(rest[0]);
-      $m_Lthreadingdemo_ThreadingDemo$().addThread__T__V(prep0);
+    case 0: {
+      $m_Lthreadingdemo_ThreadingDemo$().addThread__V();
       return (void 0);
       break
     }
-    case 0: {
-      $m_Lthreadingdemo_ThreadingDemo$().addThread__V();
+    case 1: {
+      const prep0 = $as_T(rest[0]);
+      $m_Lthreadingdemo_ThreadingDemo$().addThread__T__V(prep0);
       return (void 0);
       break
     }
