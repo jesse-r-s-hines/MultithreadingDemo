@@ -47,10 +47,11 @@ final class RavelIf(
         val ifCaseComp = Parser.compile(this.ifCase, bindings, global)
         val elseCaseComp = Parser.compile(this.elseCase, bindings, global)
 
+        var branchDistance = ifCaseComp.length + (if (elseCaseComp.length > 0) 1 else 0)
         var compiled =
             condComp ++
             Vector(
-                new Instruction("beq", condRes, "$zero", s"${ifCaseComp.length + 1}", this.src)
+                new Instruction("beq", condRes, "$zero", s"${branchDistance}", this.src)
             ) ++
             ifCaseComp
 

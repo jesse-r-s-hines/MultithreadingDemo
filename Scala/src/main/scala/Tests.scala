@@ -465,6 +465,30 @@ object Tests {
         assertVarsEqual(thread, "b" -> 1, "result" -> 3)
 
         thread = Thread.compileFrom("""
+            int a = 0;
+            int b = 0;
+            if (1 == 1) {
+                a = 1;
+                b = 1;
+            }
+            a = 2;
+        """);
+        thread.execute();
+        assertVarsEqual(thread, "a" -> 2, "b" -> 1)
+
+        thread = Thread.compileFrom("""
+            int a = 0;
+            int b = 0;
+            if (1 == 2) {
+                a = 1;
+                b = 1;
+            }
+            a = 2;
+        """);
+        thread.execute();
+        assertVarsEqual(thread, "a" -> 2, "b" -> 0)
+
+        thread = Thread.compileFrom("""
             for (int i = 0; i < 10; i++) {
                 int x = 3; // redefining in a loop should still work.
             }
