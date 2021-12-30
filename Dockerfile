@@ -13,6 +13,8 @@ RUN echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/ap
     curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add
 RUN apt-get update -y
 RUN apt-get install -y sbt
+# Run sbt once so it already has the sbt launcher downloaded
+RUN cd /root && sbt --version
 
 # Install dotnet sdk (https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-)
 RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
