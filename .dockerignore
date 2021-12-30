@@ -1,0 +1,15 @@
+.vscode
+.git
+
+Scala/target
+Scala/project/target
+Scala/project/project
+Scala/.bloop
+
+Server/bin
+Server/node_modules
+Server/obj
+Server/wwwroot/js/threadingDemo.js
+Server/wwwroot/js/threadingDemo.js.map
+Server/wwwroot/js/threadingDemoDeps.js
+Server/wwwroot/js/grammar.js
