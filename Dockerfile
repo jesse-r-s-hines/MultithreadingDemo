@@ -20,7 +20,7 @@ RUN cd /root && sbt --version
 RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb
 RUN apt-get update -y
-RUN apt-get install -y dotnet-sdk-3.1
+RUN apt-get install -y dotnet-sdk-6.0
 
 COPY . /threading-demo
 WORKDIR /threading-demo
@@ -30,4 +30,4 @@ WORKDIR /threading-demo/Server
 ENV ASPNETCORE_URLS=http://*:80
 EXPOSE 443 80
 
-CMD ["/threading-demo/Server/bin/Release/netcoreapp3.1/publish/Server"]
+CMD ["/threading-demo/Server/bin/Release/netcoreapp6.0/publish/Server"]
