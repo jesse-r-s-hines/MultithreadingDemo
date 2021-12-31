@@ -37,7 +37,6 @@ FROM base as app
 COPY --from=builder /multithreading-demo/Server ./multithreading-demo
 WORKDIR /multithreading-demo
 
-ENV ASPNETCORE_URLS=http://*:80
-EXPOSE 443 80
+EXPOSE 80 443
 
 CMD ["/multithreading-demo/bin/Release/publish/Server"]

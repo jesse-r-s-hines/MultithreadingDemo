@@ -1,8 +1,9 @@
 .vscode
 .git
 
-.dockerignore
 Dockerfile
+.dockerignore
+docker-compose.yml
 
 Scala/target
 Scala/project/target
