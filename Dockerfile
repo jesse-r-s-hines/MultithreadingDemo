@@ -1,11 +1,16 @@
-FROM ubuntu:20.04 AS builder
+# Base for both builder and app images
+FROM ubuntu:20.04 AS base
 
-# Prevent apt-get from prompting for geographic aria nd the like
+# Prevent apt-get from prompting for geographic area and the like
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y gnupg curl wget apt-transport-https make
+RUN apt-get install -y apt-transport-https openjdk-17-jdk-headless
+
+
+FROM base AS builder
+
 RUN apt-get install -y npm
-RUN apt-get install -y openjdk-17-jdk-headless
+RUN apt-get install -y curl wget make
 
 # Install sbt (https://www.scala-sbt.org/download.html)
 RUN echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/apt/sources.list.d/sbt.list && \
@@ -27,10 +32,7 @@ WORKDIR /multithreading-demo
 RUN make publish RID="linux-x64"
 
 
-FROM ubuntu:20.04
-
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y apt-transport-https openjdk-17-jdk-headless
+FROM base as app
 
 COPY --from=builder /multithreading-demo/Server ./multithreading-demo
 WORKDIR /multithreading-demo
