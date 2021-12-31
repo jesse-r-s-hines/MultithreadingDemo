@@ -3,7 +3,7 @@ services:
     image: multithreading-demo
     build: .
     ports:
-      - "80:8080"
-      - "443:843"
+      - "8080:80"
+      # - "8443:443"
     environment:
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
