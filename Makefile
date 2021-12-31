@@ -1,15 +1,17 @@
 RID ?= linux-x64
 
-build: Server/node_modules Server/wwwroot/js/grammar.js Server/wwwroot/js/threadingDemo.js
+build: Server/node_modules grammar threadingDemo
 	# Done!
 
 Server/node_modules: Server/package-lock.json Server/package.json
 	cd Server && npm ci
 
-Server/wwwroot/js/grammar.js: Grammar/grammar.ne Server/node_modules
-	node Server/node_modules/nearley/bin/nearleyc.js Grammar/grammar.ne -o Server/wwwroot/js/grammar.js
+grammar: Grammar/grammar.ne Server/node_modules
+	mkdir -p Server/wwwroot/js/generated
+	node Server/node_modules/nearley/bin/nearleyc.js Grammar/grammar.ne -o Server/wwwroot/js/generated/grammar.js
 
-Server/wwwroot/js/threadingDemo.js: $(shell find Scala/src/* -type f)
+threadingDemo: $(shell find Scala/src/* -type f)
+	mkdir -p Server/wwwroot/js/generated
 	cd Scala && sbt fastOptJS
 
 run: build
@@ -27,6 +29,6 @@ publish: build
 	dotnet publish -c Release -r "$(RID)" --self-contained true -o bin/Release/publish
 
 clean:
-	rm -f Server/wwwroot/js/grammar.js
-	rm -f Server/wwwroot/js/threadingDemo.js*
-	rm -fr Server/node_modules
+	rm -rf Server/wwwroot/js/generated
+	rm -rf Server/node_modules
+	cd Server && dotnet clean

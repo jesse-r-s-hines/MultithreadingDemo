@@ -9,8 +9,8 @@ autoStartServer := false
 scalacOptions ++= Seq("-deprecation", "-feature")
 
 // Change the output directory of the js file.
-Compile / fastOptJS / artifactPath := baseDirectory.value / ".." / "Server" / "wwwroot" / "js" / "threadingDemo.js"
-Compile / fullOptJS / artifactPath := baseDirectory.value / ".." / "Server" / "wwwroot" / "js" / "threadingDemo.js"
+Compile / fastOptJS / artifactPath := baseDirectory.value / ".." / "Server" / "wwwroot" / "js" / "generated" / "threadingDemo.js"
+Compile / fullOptJS / artifactPath := baseDirectory.value / ".." / "Server" / "wwwroot" / "js" / "generated" / "threadingDemo.js"
 
 // JQuery facade import
 libraryDependencies += "io.udash" %%% "udash-jquery" % "3.0.4"
