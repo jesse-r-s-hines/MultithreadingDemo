@@ -1,3 +1,5 @@
+RID ?= linux-x64
+
 build: Server/node_modules Server/wwwroot/js/grammar.js Server/wwwroot/js/threadingDemo.js
 	# Done!
 
@@ -21,7 +23,8 @@ watch: build
 	# Done! Server running.
 
 publish: build
-	cd Server && dotnet publish -c Release
+	cd Server && \
+	dotnet publish -c Release -r "$(RID)" --self-contained true -o bin/Release/publish
 
 clean:
 	rm -f Server/wwwroot/js/grammar.js
