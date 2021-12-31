@@ -1,6 +1,9 @@
 .vscode
 .git
 
+.dockerignore
+Dockerfile
+
 Scala/target
 Scala/project/target
 Scala/project/project
