@@ -35,8 +35,10 @@ namespace Server
 
             services.AddControllersWithViews();
             
-            services.AddDbContext<MultithreadingContext>(options =>
-                    options.UseSqlite(Configuration.GetConnectionString("MultithreadingContext")));
+            services.AddDbContext<MultithreadingContext>(
+                options => options.UseSqlite(Configuration.GetConnectionString("MultithreadingContext"),
+                options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+            ));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<MultithreadingContext>();
 
