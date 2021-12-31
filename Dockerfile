@@ -1,8 +1,7 @@
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS builder
 
 # Prevent apt-get from prompting for geographic aria nd the like
 ENV DEBIAN_FRONTEND=noninteractive
-
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y gnupg curl wget apt-transport-https make
 RUN apt-get install -y npm
@@ -22,12 +21,21 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsof
 RUN apt-get update -y
 RUN apt-get install -y dotnet-sdk-6.0
 
-COPY . /threading-demo
-WORKDIR /threading-demo
-RUN make publish
-WORKDIR /threading-demo/Server
+COPY . /multithreading-demo
+WORKDIR /multithreading-demo
+
+RUN make publish RID="linux-x64"
+
+
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y apt-transport-https openjdk-17-jdk-headless
+
+COPY --from=builder /multithreading-demo/Server ./multithreading-demo
+WORKDIR /multithreading-demo
 
 ENV ASPNETCORE_URLS=http://*:80
 EXPOSE 443 80
 
-CMD ["/threading-demo/Server/bin/Release/netcoreapp6.0/publish/Server"]
+CMD ["/multithreading-demo/bin/Release/publish/Server"]
