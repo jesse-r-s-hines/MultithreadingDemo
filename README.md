@@ -2,6 +2,8 @@
 
 This project allows you to experiment with and demonstrate concurrency, the various problems it can cause, and solutions to those problems.  You can demonstrate race conditions, deadlock, and synchronization primitives such as locks, condition variables and semaphores. Click "Open" in the top right to view an index of demo examples, or to create your own.
 
+![Deadlock](Screenshots/deadlock.png)
+
 ## Tools
 
 In order to fullfil requirements for several school projects, the demo uses several different tools.
@@ -16,21 +18,14 @@ You can run the Makefile in a bash shell to launch the server locally.
 make run
 ```
 
-Alternatively, run the commands yourself:
+### Using Docker Image
+There is also a Docker image you can use to run the app with all its dependencies. Simply run
+
 ```
-cd Server
-npm install
-cd ..
-
-node Server/node_modules/nearley/bin/nearleyc.js Grammar/grammar.ne -o Server/wwwroot/js/grammar.js
-
-cd Scala
-sbt fastOptJS
-cd ..
-
-cd Server
-dotnet run
+docker-compose build
+docker-compose up
 ```
+and go to `http://localhost:8080/Multithreading` in your browser.
 
 ## Online Demo
 An online demo, minus the database portion, is available at https://jessehines0.github.io/MultithreadingDemoPages/Demo.html
