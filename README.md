@@ -28,7 +28,7 @@ docker-compose up
 and go to `http://localhost:8080/Multithreading` in your browser.
 
 ## Online Demo
-An online demo, minus the database portion, is available at https://jessehines0.github.io/MultithreadingDemoPages/Demo.html
+An online demo, minus the database portion, is available at https://jessehines0.github.io/MultithreadingDemo/Demo.html
 
 ## Usage
 
