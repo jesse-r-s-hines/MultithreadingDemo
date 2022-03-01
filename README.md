@@ -27,6 +27,8 @@ docker-compose up
 ```
 and go to `http://localhost:8080/Multithreading` in your browser.
 
+The database will be persisted in the named volume `multithreadingdemo_db`.
+
 ## Online Demo
 An online demo, minus the database portion, is available at https://jessehines0.github.io/MultithreadingDemo/Demo.html
 
