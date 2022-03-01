@@ -7,3 +7,8 @@ services:
       # - "8443:443"
     environment:
       - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__MultithreadingContext=Data Source=/multithreading-demo/data/Multithreading.db
+    volumes:
+      - db:/multithreading-demo/data
+volumes:
+  db:

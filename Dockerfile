@@ -10,7 +10,7 @@ RUN apt-get install -y apt-transport-https openjdk-17-jdk-headless
 FROM base AS builder
 
 RUN apt-get install -y npm
-RUN apt-get install -y curl wget make
+RUN apt-get install -y curl wget make sqlite3
 
 # Install sbt (https://www.scala-sbt.org/download.html)
 RUN echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/apt/sources.list.d/sbt.list && \
@@ -25,6 +25,9 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsof
     dpkg -i packages-microsoft-prod.deb
 RUN apt-get update -y
 RUN apt-get install -y dotnet-sdk-6.0
+# dotnet-ef isn't installed by default anymore (and we have to use `dotnet-ef` not `dotnet ef`)
+ENV PATH $PATH:/root/.dotnet/tools
+RUN dotnet tool install --global dotnet-ef
 
 COPY . /multithreading-demo
 WORKDIR /multithreading-demo
