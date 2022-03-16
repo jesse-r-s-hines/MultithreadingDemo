@@ -4,6 +4,9 @@ This project allows you to experiment with and demonstrate concurrency, the vari
 
 ![Deadlock](Screenshots/deadlock.png)
 
+## Online Demo
+An online demo, minus the database portion, is available at https://jessehines0.github.io/MultithreadingDemo/Demo.html
+
 ## Tools
 
 In order to fullfil requirements for several school projects, the demo uses several different tools.
@@ -28,9 +31,6 @@ docker-compose up
 and go to `http://localhost:8080/Multithreading` in your browser.
 
 The database will be persisted in the named volume `multithreadingdemo_db`.
-
-## Online Demo
-An online demo, minus the database portion, is available at https://jessehines0.github.io/MultithreadingDemo/Demo.html
 
 ## Usage
 
