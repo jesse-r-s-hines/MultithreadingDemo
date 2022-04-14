@@ -31,4 +31,4 @@ publish: build
 clean:
 	rm -rf Server/wwwroot/js/generated
 	rm -rf Server/node_modules
-	cd Server && dotnet clean
+	cd Server && dotnet clean && rm -rf bin obj Multithreading.db*
