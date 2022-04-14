@@ -4,13 +4,13 @@ FROM ubuntu:20.04 AS base
 # Prevent apt-get from prompting for geographic area and the like
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y apt-transport-https openjdk-17-jdk-headless
+RUN apt-get install -y apt-transport-https libicu-dev
 
 
 FROM base AS builder
 
 RUN apt-get install -y npm
-RUN apt-get install -y curl wget make sqlite3
+RUN apt-get install -y curl wget make sqlite3 openjdk-17-jdk-headless
 
 # Install sbt (https://www.scala-sbt.org/download.html)
 RUN echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/apt/sources.list.d/sbt.list && \
@@ -37,9 +37,9 @@ RUN make publish RID="linux-x64"
 
 FROM base as app
 
-COPY --from=builder /multithreading-demo/Server ./multithreading-demo
+COPY --from=builder /multithreading-demo/Server/bin/Release/publish ./multithreading-demo
 WORKDIR /multithreading-demo
 
 EXPOSE 80 443
 
-CMD ["/multithreading-demo/bin/Release/publish/Server"]
+CMD ["/multithreading-demo/Server"]
