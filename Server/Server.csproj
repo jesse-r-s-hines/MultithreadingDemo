@@ -21,4 +21,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="node_modules/**" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
