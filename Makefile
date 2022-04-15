@@ -27,6 +27,7 @@ watch: build
 publish: build
 	cd Server && \
 	dotnet publish -c Release -r "$(RID)" --self-contained true -o bin/Release/publish
+	# Output in bin/Release/publish
 
 clean:
 	rm -rf Server/wwwroot/js/generated
