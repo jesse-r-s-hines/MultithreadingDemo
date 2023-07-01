@@ -25,8 +25,8 @@ make run
 There is also a Docker image you can use to run the app with all its dependencies. Simply run
 
 ```
-docker-compose build
-docker-compose up
+docker compose build
+docker compose up
 ```
 and go to `http://localhost:8080/Multithreading` in your browser.
 
