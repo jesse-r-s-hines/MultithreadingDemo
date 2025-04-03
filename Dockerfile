@@ -1,5 +1,5 @@
 # Base for both builder and app images
-FROM ubuntu:20.04 AS base
+FROM ubuntu:24.04 AS base
 
 # Prevent apt-get from prompting for geographic area and the like
 ENV DEBIAN_FRONTEND=noninteractive
@@ -20,14 +20,11 @@ RUN apt-get install -y sbt
 # Run sbt once so it already has the sbt launcher downloaded
 RUN cd /root && sbt --version
 
-# Install dotnet sdk (https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-)
-RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
-    dpkg -i packages-microsoft-prod.deb
-RUN apt-get update -y
-RUN apt-get install -y dotnet-sdk-6.0
+# Install dotnet sdk (https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-2204)
+RUN apt-get install -y dotnet-sdk-8.0
 # dotnet-ef isn't installed by default anymore (and we have to use `dotnet-ef` not `dotnet ef`)
-ENV PATH $PATH:/root/.dotnet/tools
-RUN dotnet tool install --global dotnet-ef
+ENV PATH=$PATH:/root/.dotnet/tools
+RUN dotnet tool install --global dotnet-ef --version=8.0.14
 
 COPY . /multithreading-demo
 WORKDIR /multithreading-demo
@@ -35,7 +32,7 @@ WORKDIR /multithreading-demo
 RUN make publish RID="linux-x64"
 
 
-FROM base as app
+FROM base AS app
 
 COPY --from=builder /multithreading-demo/Server/bin/Release/publish ./multithreading-demo
 WORKDIR /multithreading-demo

@@ -32,9 +32,9 @@ namespace Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            if (CurrentEnvironment.IsProduction()) {
-                services.AddLettuceEncrypt();
-            }
+            // if (CurrentEnvironment.IsProduction()) {
+            //     services.AddLettuceEncrypt();
+            // }
         
             // Runtime compilation to make the server recompile the cshtml files every time.
             // see https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-compilation?view=aspnetcore-3.1&tabs=netcore-cli
