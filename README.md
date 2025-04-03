@@ -5,7 +5,7 @@ This project allows you to experiment with and demonstrate concurrency, the vari
 ![Deadlock](Screenshots/deadlock.png)
 
 ## Online Demo
-Multithreading Demo is hosted online at https://multithreading.jesse-r-s-hines.com
+A static pages version of Multithreading Demo (without any database functionality) is hosted on github pages [here](https://jesse-r-s-hines.github.io/MultithreadingDemo)
 
 ## Tools
 
