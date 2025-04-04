@@ -5,7 +5,7 @@ services:
     build: .
     ports:
       - "8080:80"
-      # - "8443:443"
+      - "8443:443"
     environment:
       - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__MultithreadingContext=Data Source=/multithreading-demo/data/Multithreading.db
